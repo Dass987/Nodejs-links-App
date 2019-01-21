@@ -25,7 +25,7 @@ module.exports = app => {
 	// --- Routes
 	app.use(require('../routes/index'));
 	app.use(require('../routes/auth'));
-	app.use(require('../routes/links'));
+	app.use('/links', require('../routes/links'));
 
 
 	// --- Static files
