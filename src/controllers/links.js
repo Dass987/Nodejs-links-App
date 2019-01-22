@@ -1,7 +1,15 @@
 const linksController = {};
 const pool = require('../database');
 
-linksController.index = (request, response) => {
+linksController.index = async (request, response) => {
+	
+	const links = await pool.query('SELECT * FROM links LIMIT 10');
+	console.log(links);
+	response.render('links/links', {links});
+
+};
+
+linksController.formNewLink = (request, response) => {
 	response.render('links/add');
 };
 

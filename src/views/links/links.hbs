@@ -1,0 +1,29 @@
+
+<h2 class="text-center mt-4">Links</h2>
+<div class="container mt-4">
+	<div class="accordion" id="linksAccordion">
+		{{#each links}}
+		
+			<div class="card">
+				<div class="card-header" id="heading{{id}}">
+					<h5 class="mb-0">
+						<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{id}}" aria-expanded="true" aria-controls="collapse{{id}}">
+							{{@index}} - {{title}}
+						</button>
+					</h5>
+				</div>
+
+				<div id="collapse{{id}}" class="collapse" aria-labelledby="heading{{id}}" data-parent="#linksAccordion">
+					<div class="card-body">
+						{{url}}
+						<br><br>
+						{{description}}
+						<br><br>
+						{{created_at}}
+					</div>
+				</div>
+			</div>
+		
+		{{/each}}
+	</div>
+</div>
