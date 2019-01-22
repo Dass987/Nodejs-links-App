@@ -1,29 +1,49 @@
 
 <h2 class="text-center mt-4">Links</h2>
 <div class="container mt-4">
-	<div class="accordion" id="linksAccordion">
-		{{#each links}}
-		
+	{{#each links}}
+		<div class="accordion" id="linksAccordion">
 			<div class="card">
-				<div class="card-header" id="heading{{id}}">
+				<div class="card-header p-0" id="heading{{id}}">
 					<h5 class="mb-0">
-						<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{id}}" aria-expanded="true" aria-controls="collapse{{id}}">
-							{{@index}} - {{title}}
+						<button class="btn btn-light btn-lg btn-block text-left p-3" type="button" data-toggle="collapse" data-target="#collapse{{id}}" aria-expanded="true" aria-controls="collapse{{id}}">
+							{{indexPlus @index}} - {{title}}
 						</button>
 					</h5>
 				</div>
 
 				<div id="collapse{{id}}" class="collapse" aria-labelledby="heading{{id}}" data-parent="#linksAccordion">
 					<div class="card-body">
-						{{url}}
+						<a href="{{url}}"><i class="fas fa-link"></i> Ir a sitio</a>
 						<br><br>
 						{{description}}
 						<br><br>
-						{{created_at}}
+						<div class="row">
+							<div class="col pt-2">
+								<i class="far fa-clock"></i> {{timeago created_at}}...
+							</div>
+							<div class="col p-0 text-right">
+								<a href="/links/update/{{id}}" class="btn btn-secondary">Edit <i class="fas fa-edit"></i></a>
+								<a href="/links/delete/{{id}}" class="btn btn-danger">Delete <i class="fas fa-trash-alt"></i></a>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
-		
-		{{/each}}
-	</div>
+		</div>
+	{{else}}
+
+		<div class="row">
+			<div class="col-md-6 mx-auto">
+				<div class="card border">
+					<div class="card-body">
+						<h5 class="card-title text-center h2 text-danger mb-4">Oops! <i class="fas fa-exclamation-circle"></i></h5>
+						<p class="card-text mt text-center mb-4 h5">You dont have any links saved.</p>
+						<a href="/links/add" class="btn btn-secondary btn-block mt-3">Create one</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	{{/each}}
 </div>

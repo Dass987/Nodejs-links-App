@@ -9,4 +9,7 @@ router.get('/add', links.formNewLink);
 // --- Post
 router.post('/add', links.newLink);
 
+// --- Delete
+router.get('/delete/:id', links.deleteLink);
+
 module.exports = router;
