@@ -4,8 +4,8 @@ const pool = require('../database');
 linksController.index = async (request, response) => {
 	
 	const links = await pool.query('SELECT * FROM links LIMIT 10');
-	//console.log(links);
-	response.render('links/links', {links});
+	
+	response.render('links/list', {links});
 
 };
 
@@ -25,6 +25,7 @@ linksController.newLink = async (request, response) => {
 
 	await pool.query('INSERT INTO links SET ?', [newLink]);
 
+	request.flash('success', 'Link saved successfully!');
 	response.redirect('/links');
 
 };
@@ -33,7 +34,8 @@ linksController.deleteLink = async (request, response) => {
 
 	const { id } = request.params;
 	await pool.query('DELETE FROM links WHERE id = ?', [id]);
-	
+
+	request.flash('success', 'Link Removed Successfully');
 	response.redirect('/links');
 	
 };
@@ -58,7 +60,8 @@ linksController.updateLink = async (request, response) => {
 	};
 
 	await pool.query('UPDATE links SET ? WHERE id = ?', [newLink, id]);
-	
+
+	request.flash('success', 'Link Updated Successfully');
 	response.redirect('/links');
 
 };

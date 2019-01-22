@@ -1,7 +1,14 @@
 const express = require('express');
-const path = require('path');
 const morgan = require('morgan');
+const path = require('path');
 const exphbs = require('express-handlebars');
+const session = require('express-session');
+const validator = require('express-validator');
+const passport = require('passport');
+const flash = require('connect-flash');
+const MySQLStore = require('express-mysql-session')(session);
+const bodyParser = require('body-parser');
+const { database } = require('../keys');
 
 module.exports = app => {
 
@@ -22,23 +29,31 @@ module.exports = app => {
 	app.use(express.urlencoded({ extended: false }));
 	app.use(morgan('dev'));
 
+	app.use(session({
+		secret: 'mysecretapp',
+		resave: false,
+		saveUninitialized: false,
+		store: new MySQLStore(database)
+	}));
+	app.use(flash());
+	
+
 	// --- Routes
 	app.use(require('../routes/index'));
 	app.use(require('../routes/auth'));
 	app.use('/links', require('../routes/links'));
 
+	// --- Global variables
+	app.use((request, response, next) => {
+
+		app.locals.success = request.flash('success');
+
+		next();
+	});
 
 	// --- Static files
 	app.use('/public', express.static(path.join(__dirname, '../public')))
 	
-	// --- Global variables
-	app.use((request, response, next) => {
-
-		
-		
-		next();
-	});
-
 	// --- Error handlers
 	if ('development' === app.get('env')) {
 		//app.use(errorHandler);
