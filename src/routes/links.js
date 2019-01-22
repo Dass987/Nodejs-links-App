@@ -12,4 +12,8 @@ router.post('/add', links.newLink);
 // --- Delete
 router.get('/delete/:id', links.deleteLink);
 
+// --- Update
+router.get('/edit/:id', links.formUpdateLink);
+router.post('/edit/:id', links.updateLink);
+
 module.exports = router;

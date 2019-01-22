@@ -38,4 +38,29 @@ linksController.deleteLink = async (request, response) => {
 	
 };
 
+linksController.formUpdateLink = async (request, response) => {
+
+	const { id } = request.params;
+	const link = await pool.query('SELECT * FROM links WHERE id = ?', [id]);
+	
+	response.render('links/edit', { link: link[0] });
+
+};
+
+linksController.updateLink = async (request, response) => {
+
+	const { id } = request.params;
+	const { title, url, description } = request.body;
+	const newLink = {
+		title,
+		description,
+		url
+	};
+
+	await pool.query('UPDATE links SET ? WHERE id = ?', [newLink, id]);
+	
+	response.redirect('/links');
+
+};
+
 module.exports = linksController;
