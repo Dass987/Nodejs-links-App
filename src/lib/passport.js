@@ -17,13 +17,13 @@ passport.use('local.signin', new LocalStrategy({
 		const validPasswword = await helpers.matchPassword(password, user.password);
 
 		if (validPasswword) {
-			return done(null, user, request.flash('Welcome ' + user.username));
+			return done(null, user, request.flash('success', 'Welcome ' + user.username));
 		} else {
-			return done(null, false, request.flash('Incorrect password!'));
+			return done(null, false, request.flash('message', 'Incorrect password!'));
 		}
 
 	} else {
-		return done(null, false, request.flash('User does not exist'));
+		return done(null, false, request.flash('message', 'User does not exist'));
 	}
 
 }));

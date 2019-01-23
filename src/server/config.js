@@ -50,6 +50,7 @@ module.exports = app => {
 	app.use((request, response, next) => {
 
 		app.locals.success = request.flash('success');
+		app.locals.message = request.flash('message');
 
 		next();
 	});
