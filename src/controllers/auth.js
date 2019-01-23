@@ -2,7 +2,12 @@ const authenticationController = {};
 const passport = require('../lib/passport');
 
 authenticationController.profile = (request, response) => {
-	response.render('auth/profile');
+	response.render('profile');
+};
+
+authenticationController.logout = (request, response) => {
+	request.logOut();
+	response.redirect('/signin');
 };
 
 authenticationController.formSignup = (request, response) => {

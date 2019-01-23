@@ -40,23 +40,23 @@ module.exports = app => {
 	app.use(passport.initialize());
 	app.use(passport.session());
 	
+	// --- Global variables
+	app.use((request, response, next) => {
+
+		app.locals.success = request.flash('success');
+		app.locals.message = request.flash('message');
+		app.locals.user = request.user;
+
+		next();
+	});
 
 	// --- Routes
 	app.use(require('../routes/index'));
 	app.use(require('../routes/auth'));
 	app.use('/links', require('../routes/links'));
 
-	// --- Global variables
-	app.use((request, response, next) => {
-
-		app.locals.success = request.flash('success');
-		app.locals.message = request.flash('message');
-
-		next();
-	});
-
 	// --- Static files
-	app.use('/public', express.static(path.join(__dirname, '../public')))
+	app.use(express.static(path.join(__dirname, '../public')))
 	
 	// --- Error handlers
 	if ('development' === app.get('env')) {
