@@ -3,7 +3,7 @@ const pool = require('../database');
 
 linksController.index = async (request, response) => {
 	
-	const links = await pool.query('SELECT * FROM links LIMIT 10');
+	const links = await pool.query('SELECT * FROM links WHERE user_id = ? LIMIT 10', [request.user.id]);
 	
 	response.render('links/list', {links});
 
@@ -20,7 +20,8 @@ linksController.newLink = async (request, response) => {
 	const newLink = {
 		title,
 		url,
-		description
+		description,
+		user_id: request.user.id
 	};
 
 	await pool.query('INSERT INTO links SET ?', [newLink]);

@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../controllers/auth');
+const { isLoggedIn, isNotLoggedIn } = require('../lib/auth');
 
 // --- GET
-router.get('/signin', auth.formSignin);
-router.get('/signup', auth.formSignup);
-router.get('/profile', auth.profile);
-router.get('/logout', auth.logout);
+router.get('/signin', isNotLoggedIn, auth.formSignin);
+router.get('/signup', isNotLoggedIn, auth.formSignup);
+router.get('/profile', isLoggedIn, auth.profile);
+router.get('/logout', isLoggedIn, auth.logout);
 
 // --- POST
 router.post('/signup', auth.signup);
