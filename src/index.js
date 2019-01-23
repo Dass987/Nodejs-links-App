@@ -3,6 +3,7 @@ const config = require('./server/config');
 
 // --- Inits
 const app = config(express());
+require('./lib/passport');
 
 // --- Server listening
 app.listen(app.get('port'), () => {
